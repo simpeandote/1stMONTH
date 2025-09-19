@@ -34,7 +34,9 @@
   #paper {
     width: var(--paper-width);
     max-width: var(--paper-max);
-    height: 90vh; /* Altura fija para la carta en todos los dispositivos */
+    max-height: 90vh; /* La altura máxima que la carta puede alcanzar */
+    min-height: 40vh; /* Altura inicial para que no se vea vacío */
+    height: auto;
     background: linear-gradient(to bottom, var(--paper-bg-top), var(--paper-bg-bottom));
     padding: 28px 34px;
     border: 4px solid var(--frame);
@@ -44,6 +46,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* Permite el desplazamiento en el contenedor de la carta */
   }
 
   #paper::before,
@@ -82,7 +85,7 @@
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
-    overflow-y: auto; /* Permite el desplazamiento vertical cuando el contenido es demasiado largo */
+    /* Eliminamos el overflow-y de aquí */
     padding-right: 8px;
   }
 
@@ -113,7 +116,10 @@
   .cursor.hidden { animation: none; opacity: 0; width: 0; margin:0; }
 
   @media (max-width:480px){
-    #title { font-size: 22px; white-space: normal; }
+    #title { 
+      font-size: 22px; 
+      white-space: normal;
+    }
     #paper { padding: 18px; }
     #letter { font-size: 15px; }
   }
@@ -133,7 +139,7 @@
 const titleText = "Primer mes de muchos más...";
 const rawLetter = `Mi princesa de miel,
 
-Buah... creo que ese será mi nuevo pet name favorito. 
+Buah... creo que ese será mi nuevo pet name favorito.
 Bueno, ajá. Hola, mi bebé, amor de mi vida, mi otra mitad. Mi medio mango. Me acabas de mandar a dormir y la verdad es que yo llevo toda la noche preparando algo digno de y para vos. Y no me molesta amanecerme en esto mismo pues vos te merecés todo.
 Primero que nada, hoy es un día para festejar(nos). Fue un mes hermoso—aunque ambos sabemos que llevamos más que eso—, y puedo jurarte que me encanta compartir mi vida con vos. Podría explayar en hojas y hojas y hojas lo feliz que me haces y todavía sería insuficiente.
 Por ahí, una vez, me dijeron que las acciones hablan mil veces más que las palabras, por lo que mi misión en esta vida se resume a abrirte mi corazón cuantas veces sean necesarias para que entiendas una mínima parte de lo que en realidad me haces sentir porque, ciertamente, soy incapaz de explicarlo con exactitud.
