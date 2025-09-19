@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRST MONTH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { padding: 0; margin: 0; box-sizing: border-box; font-family: 'Nunito', sans-serif; }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #e0f7fa;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .container h2 {
+      font-size: 1.7rem;
+      margin-bottom: 10px;
+      color: #00796b;
+    }
+
+    .input-display {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0 20px 0;
+    }
+
+    .input-display span {
+      width: 35px;
+      height: 35px;
+      border: 2px solid #00796b;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      background-color: #e0f7fa;
+    }
+
+    .keypad {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .keypad button {
+      padding: 15px 20px;
+      font-size: 20px;
+      background-color: #80deea;
+      border: 1px solid #004d40;
+      border-radius: 6px;
+      outline: none;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+      box-shadow: 0 3px #004d40;
+      color: #004d40;
+    }
+
+    .keypad button:hover {
+      background-color: #4db6ac;
+      transform: scale(1.05);
+    }
+
+    .keypad button:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px #004d40;
+      background-color: #66c2c2;
+    }
+
+    .flash {
+      animation: flash 0.3s ease-out;
+    }
+
+    @keyframes flash {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(3px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Barra de espacio: botón visible, texto transparente */
+    .space {
+      flex: 1;
+      max-width: 300px;
+      background-color: #80deea;
+      border: 1px solid #004d40;
+      border-radius: 6px;
+      box-shadow: 0 3px #004d40;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+
+      color: transparent !important;
+      text-shadow: none !important;
+      user-select: none;
+    }
+
+    .space:hover,
+    .space:active {
+      color: transparent !important;
+      text-shadow: none !important;
+    }
+
+    /* Responsive para celulares */
+    @media (max-width: 500px) {
+      .container { padding: 20px; }
+      .input-display span { width: 28px; height: 28px; font-size: 20px; }
+      .keypad button { padding: 10px 14px; font-size: 16px; }
+      .row { gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔒<br>♡‧₊˚✧ ૮ ˶ᵔ ᵕ ᵔ˶ ა ✧˚₊‧♡</h2>
+    <div class="input-display" id="inputDisplay">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="keypad">
+      <div class="row">
+        <button data-key="Q">Q</button>
+        <button data-key="W">W</button>
+        <button data-key="E">E</button>
+        <button data-key="R">R</button>
+        <button data-key="T">T</button>
+        <button data-key="Y">Y</button>
+        <button data-key="U">U</button>
+        <button data-key="I">I</button>
+        <button data-key="O">O</button>
+        <button data-key="P">P</button>
+      </div>
+      <div class="row">
+        <button data-key="A">A</button>
+        <button data-key="S">S</button>
+        <button data-key="D">D</button>
+        <button data-key="F">F</button>
+        <button data-key="G">G</button>
+        <button data-key="H">H</button>
+        <button data-key="J">J</button>
+        <button data-key="K">K</button>
+        <button data-key="L">L</button>
+      </div>
+      <div class="row">
+        <button data-key="Z">Z</button>
+        <button data-key="X">X</button>
+        <button data-key="C">C</button>
+        <button data-key="V">V</button>
+        <button data-key="B">B</button>
+        <button data-key="N">N</button>
+        <button data-key="M">M</button>
+      </div>
+      <div class="row">
+        <button class="space" data-key=" ">ESPACIOOOOOOOOO</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+
+  <script>
+    const correctPassword = "PAPOI";
+    const display = document.getElementById("inputDisplay");
+    const boxes = display.querySelectorAll('span');
+    const clickSound = document.getElementById("clickSound");
+    let input = "";
+
+    document.querySelectorAll('.keypad button').forEach(btn => {
+      btn.addEventListener('click', () => enterDigit(btn.dataset.key, btn));
+    });
+
+    function enterDigit(digit, btn) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      if (input.length < boxes.length) {
+        input += digit;
+      }
+
+      boxes.forEach((box, index) => {
+        box.textContent = index < input.length ? '•' : '';
+      });
+
+      btn.classList.remove("flash");
+      void btn.offsetWidth;
+      btn.classList.add("flash");
+
+      if (input.length === boxes.length) {
+        if (input === correctPassword) {
+          window.location.href = "flower.html";
+        } else {
+          alert("Contraseña incorrecta, intenta de nuevo");
+          input = "";
+          boxes.forEach(box => box.textContent = '');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
