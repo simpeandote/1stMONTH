@@ -34,7 +34,7 @@
   #paper {
     width: var(--paper-width);
     max-width: var(--paper-max);
-    height: 90vh;                 
+    height: 90vh; /* Altura fija para la carta en todos los dispositivos */
     background: linear-gradient(to bottom, var(--paper-bg-top), var(--paper-bg-bottom));
     padding: 28px 34px;
     border: 4px solid var(--frame);
@@ -82,7 +82,7 @@
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
-    overflow-y: auto;              
+    overflow-y: auto; /* Permite el desplazamiento vertical cuando el contenido es demasiado largo */
     padding-right: 8px;
   }
 
@@ -190,17 +190,16 @@ async function start(){
   await typewriter(letterEl,rawLetter,25);
 }
 
-/* Primer toque: iniciar animación + música */
-stage.addEventListener('click', async function onFirstClick(){
-  if(!started){
-    await start();
+// Inicia la animación y la música tan pronto como la página cargue
+// Nota: La reproducción automática puede no funcionar en todos los navegadores sin una interacción del usuario previa.
+document.addEventListener('DOMContentLoaded', start);
+
+/* Primer toque: Alterna play/pause de la canción */
+stage.addEventListener('click', function onFirstClick(){
+  if(audio.paused){
+    audio.play();
   } else {
-    /* Alterna play/pause de la canción */
-    if(audio.paused){
-      audio.play();
-    } else {
-      audio.pause();
-    }
+    audio.pause();
   }
 });
 </script>
