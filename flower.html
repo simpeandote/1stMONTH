@@ -18,7 +18,7 @@
     height:100%;
     margin:0;
     font-family: 'Courier Prime', monospace;
-    background: linear-gradient(to bottom, #b0a49e, #dcd2c0);
+    background-color: #dcd2c0; /* ¡Corregido! Fondo sólido para evitar el degradado */
   }
 
   .stage{
@@ -150,7 +150,8 @@ Estoy agradecido por tu acompañamiento, por tu amor, por tu ser y por cualquier
 Mi amor es todo tuyo, así como mi mente, mi alma y mi futuro. Quiero todo con vos y este apenas es un mes—año—de muchos, muchos más.
 Te amo, mi princesa de miel.
 Feliz primer. Feliz primer semestre de aguantar a este loco enamorado que solo sabe estar a tus pies.
-
+Tu loco enamorado por siempre,
+Bilem.
 `;
 
 const stage = document.getElementById('stage');
@@ -177,9 +178,6 @@ function typewriter(el, text, speed=40) {
         }
         i++;
         
-        // ¡Este es el cambio clave!
-        // Nos aseguramos de que el contenedor de la carta se desplace hacia abajo
-        // para mantener el cursor y el texto visible.
         const paperEl = document.getElementById('paper');
         paperEl.scrollTop = paperEl.scrollHeight;
         
@@ -202,11 +200,8 @@ async function start(){
   await typewriter(letterEl,rawLetter,25);
 }
 
-// Inicia la animación y la música tan pronto como la página cargue
-// Nota: La reproducción automática puede no funcionar en todos los navegadores sin una interacción del usuario previa.
 document.addEventListener('DOMContentLoaded', start);
 
-/* Primer toque: Alterna play/pause de la canción */
 stage.addEventListener('click', function onFirstClick(){
   if(audio.paused){
     audio.play();
