@@ -18,7 +18,7 @@
     height:100%;
     margin:0;
     font-family: 'Courier Prime', monospace;
-    background-color: #dcd2c0; /* ¡Corregido! Fondo sólido para evitar el degradado */
+    background-color: #dcd2c0;
   }
 
   .stage{
@@ -46,7 +46,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
   }
 
   #paper::before,
@@ -80,12 +79,13 @@
 
   #letter {
     flex:1;
-    font-size: 17px;
+    font-size: 15px; /* ¡Corregido! El tamaño de la letra ahora es 15px */
     color: var(--ink);
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
     padding-right: 8px;
+    overflow-y: auto;
   }
 
   #letter::-webkit-scrollbar {
@@ -122,7 +122,7 @@
     #paper {
       padding: 18px;
     }
-    #letter { font-size: 15px; }
+    #letter { font-size: 13px; } /* ¡Corregido! El tamaño de la letra en móvil ahora es 13px */
   }
 </style>
 </head>
@@ -150,8 +150,7 @@ Estoy agradecido por tu acompañamiento, por tu amor, por tu ser y por cualquier
 Mi amor es todo tuyo, así como mi mente, mi alma y mi futuro. Quiero todo con vos y este apenas es un mes—año—de muchos, muchos más.
 Te amo, mi princesa de miel.
 Feliz primer. Feliz primer semestre de aguantar a este loco enamorado que solo sabe estar a tus pies.
-Tu loco enamorado por siempre,
-Bilem.
+
 `;
 
 const stage = document.getElementById('stage');
@@ -177,10 +176,10 @@ function typewriter(el, text, speed=40) {
           el.insertBefore(document.createTextNode(ch),cursor);
         }
         i++;
-        
+
         const paperEl = document.getElementById('paper');
         paperEl.scrollTop = paperEl.scrollHeight;
-        
+
         setTimeout(step,speed+(ch==='\n'?100:0));
       }else{
         cursor.classList.add('hidden');
