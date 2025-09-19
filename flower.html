@@ -137,7 +137,6 @@
 
 <script>
 const titleText = `~ 818 ~`;
-  
 const rawLetter = `Mi princesa de miel,
 
 Buah... creo que ese será mi nuevo pet name favorito.
@@ -190,9 +189,13 @@ async function start(){
   started=true;
   try{ audio.volume=0.5; await audio.play(); }catch(e){}
   
-  const combinedText = `<h1>${titleText}</h1>${rawLetter}`;
+  // 1. Crea el elemento <h1> y lo inserta en la carta antes de empezar
+  const titleEl = document.createElement('h1');
+  titleEl.textContent = titleText;
+  letterEl.appendChild(titleEl);
   
-  await typewriter(letterEl, combinedText, 25);
+  // 2. Comienza a escribir solo el texto de la carta
+  await typewriter(letterEl, rawLetter, 25);
 }
 
 document.addEventListener('DOMContentLoaded', start);
@@ -207,9 +210,3 @@ stage.addEventListener('click', function onFirstClick(){
 </script>
 </body>
 </html>
-
-
-
-
-
-
