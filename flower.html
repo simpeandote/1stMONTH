@@ -13,6 +13,7 @@
     --paper-bg-bottom: #f3e9d2;
     --ink: #3a2f25;
     --frame: #bfae94;
+    --title-size: 32px; /* ¡Nuevo! Variable para el tamaño del título */
   }
   html,body{
     height:100%;
@@ -69,7 +70,7 @@
   #paper::after { bottom: 8px; }
 
   #title {
-    font-size: 32px;
+    font-size: var(--title-size); /* ¡Corregido! Ahora usa la nueva variable */
     color: var(--ink);
     text-align: center;
     margin: 0 0 12px 0;
@@ -79,7 +80,7 @@
 
   #letter {
     flex:1;
-    font-size: 15px; /* ¡Corregido! El tamaño de la letra ahora es 15px */
+    font-size: 15px;
     color: var(--ink);
     line-height: 1.6;
     white-space: pre-wrap;
@@ -122,7 +123,7 @@
     #paper {
       padding: 18px;
     }
-    #letter { font-size: 13px; } /* ¡Corregido! El tamaño de la letra en móvil ahora es 13px */
+    #letter { font-size: 13px; }
   }
 </style>
 </head>
@@ -170,16 +171,16 @@ function typewriter(el, text, speed=40) {
       if(i<text.length){
         const ch=text.charAt(i);
         const prev=cursor.previousSibling;
-        if(prev && prev.nodeType===Node.TEXT_NODE){
+        if(prev && prev.nodeType===Node.TEXT_TEXT){
           prev.nodeValue+=ch;
         }else{
           el.insertBefore(document.createTextNode(ch),cursor);
         }
         i++;
-
+        
         const paperEl = document.getElementById('paper');
         paperEl.scrollTop = paperEl.scrollHeight;
-
+        
         setTimeout(step,speed+(ch==='\n'?100:0));
       }else{
         cursor.classList.add('hidden');
