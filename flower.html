@@ -8,7 +8,7 @@
 <style>
   :root{
     --paper-width: 80%;
-    --paper-max: 720px;
+    --paper-max: 100px;
     --paper-bg-top: #fefcf5;
     --paper-bg-bottom: #f3e9d2;
     --ink: #3a2f25;
@@ -34,8 +34,8 @@
   #paper {
     width: var(--paper-width);
     max-width: var(--paper-max);
-    min-height: 40vh; /* Altura inicial discreta */
-    max-height: 90vh; /* Altura máxima para evitar que se salga de la vista */
+    min-height: 30vh; /* Altura inicial discreta */
+    max-height: 45vh; /* ¡Corregido! Ahora la mitad de la altura máxima anterior */
     height: auto;
     background: linear-gradient(to bottom, var(--paper-bg-top), var(--paper-bg-bottom));
     padding: 28px 34px;
