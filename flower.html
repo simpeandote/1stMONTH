@@ -47,7 +47,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
   }
 
   #paper::before,
@@ -70,15 +69,6 @@
   #paper::before { top: 8px; }
   #paper::after { bottom: 8px; }
 
-  #title {
-    font-size: var(--title-size);
-    color: var(--ink);
-    text-align: center;
-    margin: 0 0 12px 0;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
   #letter {
     flex:1;
     font-size: 15px;
@@ -87,6 +77,14 @@
     white-space: pre-wrap;
     word-break: break-word;
     padding-right: 8px;
+    overflow-y: auto;
+  }
+
+  h1 {
+    font-size: var(--title-size);
+    color: var(--ink);
+    text-align: center;
+    margin: 0 0 12px 0;
   }
 
   #letter::-webkit-scrollbar {
@@ -109,11 +107,12 @@
     margin-left: 2px;
     animation: blink 0.7s steps(1) infinite;
   }
+  .cursor.hidden { animation: none; opacity: 0; width: 0; margin:0; }
+
   @keyframes blink {
     0%,50%,100% { opacity:1; }
     25%,75% { opacity:0; }
   }
-  .cursor.hidden { animation: none; opacity: 0; width: 0; margin:0; }
 
   @media (max-width:480px){
     #title {
@@ -130,7 +129,6 @@
 <body>
 <div class="stage" id="stage">
   <div id="paper">
-    <h1 id="title"></h1>
     <div id="letter"></div>
   </div>
 </div>
@@ -138,7 +136,7 @@
 <audio id="audio" src="ivana - me piensas, LUEGO EXISTO (Video Oficial) [iGy0xL0NBp8].mp3" preload="auto"></audio>
 
 <script>
-const titleText = "Primer mes de muchos más...";
+const titleText = "ʕ•̫͡•ʕ•̫͡•ʔ•̫͡•ʔ•̫͡•ʕ•̫͡•ʔ";
 const rawLetter = `Mi princesa de miel,
 
 Buah... creo que ese será mi nuevo pet name favorito.
@@ -152,17 +150,16 @@ Mi amor es todo tuyo, así como mi mente, mi alma y mi futuro. Quiero todo con v
 Te amo, mi princesa de miel.
 Feliz primer. Feliz primer semestre de aguantar a este loco enamorado que solo sabe estar a tus pies.
 Tu loco enamorado por siempre,
-Bilem.
+Beloni.
 `;
 
 const stage = document.getElementById('stage');
-const titleEl = document.getElementById('title');
 const letterEl = document.getElementById('letter');
 const audio = document.getElementById('audio');
 
 let started = false;
 
-function typewriter(el, text, speed=40) {
+async function typewriter(el, text, speed=40) {
   return new Promise((resolve)=>{
     const cursor = document.createElement('span');
     cursor.className='cursor';
@@ -171,16 +168,11 @@ function typewriter(el, text, speed=40) {
     function step(){
       if(i<text.length){
         const ch=text.charAt(i);
-        const prev=cursor.previousSibling;
-        if(prev && prev.nodeType===Node.TEXT_NODE){
-          prev.nodeValue+=ch;
-        }else{
-          el.insertBefore(document.createTextNode(ch),cursor);
-        }
+        el.insertBefore(document.createTextNode(ch),cursor);
         i++;
         
-        const paperEl = document.getElementById('paper');
-        paperEl.scrollTop = paperEl.scrollHeight;
+        // Desplazamiento automático
+        cursor.scrollIntoView({ behavior: 'smooth', block: 'end' });
         
         setTimeout(step,speed+(ch==='\n'?100:0));
       }else{
@@ -196,9 +188,10 @@ async function start(){
   if(started) return;
   started=true;
   try{ audio.volume=0.5; await audio.play(); }catch(e){}
-  await typewriter(titleEl,titleText,120);
-  await new Promise(r=>setTimeout(r,300));
-  await typewriter(letterEl,rawLetter,25);
+  
+  const combinedText = `<h1>${titleText}</h1>${rawLetter}`;
+  
+  await typewriter(letterEl, combinedText, 25);
 }
 
 document.addEventListener('DOMContentLoaded', start);
