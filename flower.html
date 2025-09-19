@@ -34,8 +34,8 @@
   #paper {
     width: var(--paper-width);
     max-width: var(--paper-max);
-    min-height: 30vh; /* Altura inicial discreta */
-    max-height: 45vh; /* ¡Corregido! Ahora la mitad de la altura máxima anterior */
+    min-height: 30vh;
+    max-height: 45vh;
     height: auto;
     background: linear-gradient(to bottom, var(--paper-bg-top), var(--paper-bg-bottom));
     padding: 28px 34px;
@@ -46,7 +46,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Permite el desplazamiento cuando se alcanza la altura máxima */
+    overflow-y: auto;
   }
 
   #paper::before,
@@ -176,8 +176,13 @@ function typewriter(el, text, speed=40) {
           el.insertBefore(document.createTextNode(ch),cursor);
         }
         i++;
-        /* scroll automático sin quitar scrollbar */
-        el.scrollTop = el.scrollHeight;
+        
+        // ¡Este es el cambio clave!
+        // Nos aseguramos de que el contenedor de la carta se desplace hacia abajo
+        // para mantener el cursor y el texto visible.
+        const paperEl = document.getElementById('paper');
+        paperEl.scrollTop = paperEl.scrollHeight;
+        
         setTimeout(step,speed+(ch==='\n'?100:0));
       }else{
         cursor.classList.add('hidden');
@@ -212,4 +217,3 @@ stage.addEventListener('click', function onFirstClick(){
 </script>
 </body>
 </html>
-
