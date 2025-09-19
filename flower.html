@@ -47,7 +47,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* ¡Corregido! Ahora el scroll está en el contenedor de la carta */
+    overflow-y: auto;
   }
 
   #paper::before,
@@ -87,7 +87,6 @@
     white-space: pre-wrap;
     word-break: break-word;
     padding-right: 8px;
-    /* Eliminamos el overflow-y de aquí */
   }
 
   #letter::-webkit-scrollbar {
@@ -152,7 +151,8 @@ Estoy agradecido por tu acompañamiento, por tu amor, por tu ser y por cualquier
 Mi amor es todo tuyo, así como mi mente, mi alma y mi futuro. Quiero todo con vos y este apenas es un mes—año—de muchos, muchos más.
 Te amo, mi princesa de miel.
 Feliz primer. Feliz primer semestre de aguantar a este loco enamorado que solo sabe estar a tus pies.
-
+Tu loco enamorado por siempre,
+Bilem.
 `;
 
 const stage = document.getElementById('stage');
@@ -179,7 +179,6 @@ function typewriter(el, text, speed=40) {
         }
         i++;
         
-        // ¡Corregido! Ahora desplazamos el contenedor principal de la carta
         const paperEl = document.getElementById('paper');
         paperEl.scrollTop = paperEl.scrollHeight;
         
