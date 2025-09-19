@@ -34,9 +34,7 @@
   #paper {
     width: var(--paper-width);
     max-width: var(--paper-max);
-    max-height: 90vh; /* La altura máxima que la carta puede alcanzar */
-    min-height: 40vh; /* Altura inicial para que no se vea vacío */
-    height: auto;
+    height: 90vh; /* Se restaura la altura fija para evitar que se alargue */
     background: linear-gradient(to bottom, var(--paper-bg-top), var(--paper-bg-bottom));
     padding: 28px 34px;
     border: 4px solid var(--frame);
@@ -46,7 +44,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Permite el desplazamiento en el contenedor de la carta */
+    overflow-y: auto; /* Se habilita el scroll en el contenedor de la carta */
   }
 
   #paper::before,
