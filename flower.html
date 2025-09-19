@@ -13,7 +13,7 @@
     --paper-bg-bottom: #f3e9d2;
     --ink: #3a2f25;
     --frame: #bfae94;
-    --title-size: 32px; /* ¡Nuevo! Variable para el tamaño del título */
+    --title-size: 32px;
   }
   html,body{
     height:100%;
@@ -47,6 +47,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* ¡Corregido! Ahora el scroll está en el contenedor de la carta */
   }
 
   #paper::before,
@@ -70,7 +71,7 @@
   #paper::after { bottom: 8px; }
 
   #title {
-    font-size: var(--title-size); /* ¡Corregido! Ahora usa la nueva variable */
+    font-size: var(--title-size);
     color: var(--ink);
     text-align: center;
     margin: 0 0 12px 0;
@@ -86,7 +87,7 @@
     white-space: pre-wrap;
     word-break: break-word;
     padding-right: 8px;
-    overflow-y: auto;
+    /* Eliminamos el overflow-y de aquí */
   }
 
   #letter::-webkit-scrollbar {
@@ -171,13 +172,14 @@ function typewriter(el, text, speed=40) {
       if(i<text.length){
         const ch=text.charAt(i);
         const prev=cursor.previousSibling;
-        if(prev && prev.nodeType===Node.TEXT_TEXT){
+        if(prev && prev.nodeType===Node.TEXT_NODE){
           prev.nodeValue+=ch;
         }else{
           el.insertBefore(document.createTextNode(ch),cursor);
         }
         i++;
         
+        // ¡Corregido! Ahora desplazamos el contenedor principal de la carta
         const paperEl = document.getElementById('paper');
         paperEl.scrollTop = paperEl.scrollHeight;
         
